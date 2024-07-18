@@ -12,13 +12,19 @@ import initializePassport from './config/passport/passport.js';
 import { Server } from 'socket.io';
 import { engine } from 'express-handlebars';
 import { __dirname } from './path.js';
+import cors from 'cors';
 
 
 
 //Configuraciones.
 const app = express()
 const PORT = 8080
-
+const corsOptions = {
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}
+app.use(cors(corsOptions))
 //Server
 const server = app.listen(PORT, () => {
     console.log(`Server on port: ${PORT}`)

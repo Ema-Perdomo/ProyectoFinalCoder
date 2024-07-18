@@ -1,16 +1,3 @@
-/*{
-    "title": "Monitor",
-    "description": "Monitor HD 1080p 24 pulgadas",
-    "price": 1500,
-    "stock": 25,
-    "code": "L123",
-    "thumbnail": [],
-    "id": "1747ea8e4b47e46934ba",
-    "img": ""
-},
-
-*/
-
 import { Schema, model } from 'mongoose';
 import paginate from 'mongoose-paginate-v2';
 
@@ -31,7 +18,7 @@ const productSchema = new Schema({
         required: true
     },
     category: {
-        type : String,
+        type: String,
         required: true
     },
     status: {

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import {login,register,sessionGithub,logout,testJWT, sendEmailPassword, changePassword} from '../controllers/sessionController.js'
+import { login, register, githubSession, sendEmailPassword, changePassword, logout, testJWT } from '../controllers/sessionController.js'
 
 
 const sessionRouter = Router()
@@ -12,13 +12,13 @@ sessionRouter.post('/register', passport.authenticate('register'), register)
 
 sessionRouter.get('/github', passport.authenticate('github', { scope: ['user: email'] }), async (req, res) => { }) //scope: lo que voy a devolver
 
-sessionRouter.get('/githubSession', passport.authenticate('github'), sessionGithub)
+sessionRouter.get('/githubSession', passport.authenticate('github'), githubSession)
 
 sessionRouter.post('/sendEmailPassword', sendEmailPassword)
 
-sessionRouter.post( "reset-password/:token", changePassword)
+sessionRouter.post("reset-password/:token", changePassword)
 
-    //GOOGLE AUTH (si quiero hacerlo)
+//GOOGLE AUTH (si quiero hacerlo) TODO: ver como hacerlo
 // app.get('/auth/google',
 //     passport.authenticate('google', { scope: ['profile'] }));
 
@@ -31,6 +31,6 @@ sessionRouter.post( "reset-password/:token", changePassword)
 
 sessionRouter.get('/logout', logout)
 
-sessionRouter.get('/testJWT', passport.authenticate('jwt', { session: false }) , testJWT)
+sessionRouter.get('/testJWT', passport.authenticate('jwt', { session: false }), testJWT)
 
 export default sessionRouter

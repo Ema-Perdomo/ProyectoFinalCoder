@@ -1,8 +1,7 @@
-import passport from "passport";
 import { sendEmailChangePassword } from "../utils/nodemailer.js";
 import jwt from 'jsonwebtoken';
 import { userModel } from "../models/user.js";
-import { validatePassword, createHash } from "../utils/validatePassword.js";
+import { validatePassword, createHash } from "../utils/bcrypt.js";
 
 export const login = async (req, res) => {
     try {
@@ -45,7 +44,7 @@ export const githubSession = async (req, res) => {
 
 export const logout = async (req, res) => {
     const user = await userModel.findOne({ email: req.session.user.email })
-    user.lastConnection = new Date() //TODO: ajustar date para que muestre el correcto de gun nuestra zona horaria o segun la zona del usser
+    user.lastConnection = new Date() //TODO: ajustar date para que muestre el correcto segun nuestra zona horaria o segun la zona del user
     await user.save()
     
     req.session.destroy((e =>

@@ -13,6 +13,18 @@ export const getCart = async (req, res) => {
         res.status(500).send(`Error interno del servidor al consultar carrito: ${error}`)
     }
 }
+
+// cartRouter.post('/', async (req, res) => {       //No tiene sentido al haber un solo carrito
+//     try {
+//         const id = crypto.randomBytes(10).toString('hex')
+//         const cartManager = new CartManager('./src/data/cart.json', id)
+//         return res.status(200).send(`Carrito creado correctamente con el id: ${id}`)
+
+//     } catch (error) {
+//         res.status(500).send(`Error al crear carrito: ${error}`)
+//     }
+// })
+
 export const createCart = async (req, res) => {
     try {
         const crearCart = await cartModel.create({ products: [] })
@@ -48,9 +60,27 @@ export const insertProductCart = async (req, res) => {
             res.status(403).send('Usuario no autorizado')
         }
     } catch (error) {
-        res.status(500).send(`Error interno del servidor al agregar producto: ${error}`) 
+        res.status(500).send(`Error interno del servidor al agregar producto: ${error}`)
     }
 }
+
+export const deleteFromCart = async (req, res) => {
+    try {
+        const idProducto = req.params.pid
+        const idCart = req.params.cid
+        const cart = await cartModel.findById(idCart)
+        const indice = cart.products.findIndex(product => product.id_prod == idProducto)
+        if ( indice != -1) {
+            cart.products.splice(indice, 1)
+            const mensaje = await cartModel.findByIdAndUpdate(idCart, cart)
+            res.status(200).send(mensaje)}
+    } catch (error) {
+        res.status(500).send(`Error interno del servidor al eliminar el producto: ${error}`)
+    }
+}
+//TODO: No se si se borra del cart asociado al user o de la bdd
+//Para BORRAR USAR COMO ID DEL PROD el _id . _id dentro de el cart pq sino borramos
+//el producto no del carrito sino de la dbb
 
 export const createTicket = async (req, res) => {
 
@@ -60,9 +90,9 @@ export const createTicket = async (req, res) => {
         let prodSinStock = []
         if (cart) {
             cart.products.forEach(async (product) => {
-                let product = await productModel.findById(product.id_prod)
+                let producto = await productModel.findById(product.id_prod)
                 if (productModel.stock < product.quantity) { //Si el stock es menor a la cantidad de productos en el carrito guardo el producto en un array
-                    prodSinStock.push(product._id)
+                    prodSinStock.push(producto._id) //producto o product??
                 }
             })
             if (prodSinStock.length = 0) {
@@ -122,8 +152,3 @@ export const createTicket = async (req, res) => {
         res.status(500).send(`Error interno del servidor al crear ticket: ${error}`)
     }
 }
-
-// export const getCart = async (req, res) => {
-//     const cart = await cartModel.find();
-//     res.json(cart);
-// }   

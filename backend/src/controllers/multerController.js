@@ -1,5 +1,3 @@
-
-
 export const uploadImage = async (req, res) => (
     (req, res) => {   //Carga de imagenes
         try {

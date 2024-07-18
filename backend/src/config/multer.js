@@ -36,8 +36,6 @@ const storageProfiles = multer.diskStorage({
 })
 
 // const upload = multer({ storage: storage }) ORIGINAL CODE
-const uploadProds = multer({ storage: storageProds })
-const uploadDocs = multer({ storage: storageDocs })
-const uploadProfiles = multer({ storage: storageProfiles })
-
-export default upload
+export const uploadProds = multer({ storage: storageProds })
+export const uploadDocs = multer({ storage: storageDocs })
+export const uploadProfiles = multer({ storage: storageProfiles })
