@@ -1,0 +1,163 @@
+##Copia de lo hecho en clase 39 
+##TODO: Completar lo mismo para Carts y Products
+
+paths:
+  /api/users/:
+    get:
+      summary: Obtener todos los usuarios
+      tags: # Tags son los tipos de datos que voy a trabajar
+        - Users
+      responses:
+        "200":
+          description: Usuarios obtenidos correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "500":
+          description: Error al obtener los usuarios
+    post:
+      summary: Crear un usuario nuevo
+      tags:
+        - Users
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: Datos del usuario a crear
+          schema:
+            type: object
+            properties:
+              first_name:
+                type: string
+              last_name:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        "201":
+          description: Usuario creado correctamente
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/User"
+        "500":
+          description: Error al crear el usuario
+
+  /api/users/{id}:
+    get:
+      summary: Obtener un usuario
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id del usuario a buscar
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: Usuario obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: Usuario no encontrado
+        "500":
+          description: Error al obtener el usuario
+    put:
+      summary: Actualizar un usuario
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id del usuario a actualizar
+          schema:
+            $type: string
+        - name: body
+          in: body
+          required: true
+          description: Datos del usuario a actualizar
+          schema:
+            $type: object
+            properties:
+              first_name:
+                type: string
+                description: Nombre del usuario
+              last_name:
+                type: string
+                description: Apellido del usuario
+              email:
+                type: string
+                description: Email del usuario
+              password:
+                type: string
+                description: Contraseña del usuario
+      responses:
+        "200":
+          description: Usuario actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: Usuario no encontrado
+        "500":
+          description: Error al actualizar el usuario
+    delete:
+      summary: Eliminar un usuario
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id del usuario a eliminar
+          schema:
+            $type: string
+      responses:
+        "200":
+          description: Usuario eliminado correctamente
+        "404":
+          description: Usuario no encontrado
+        "500":
+          description: Error al eliminar el usuario
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado por MongoDB
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          description: Email del usuario
+        password:
+          type: string
+          description: Contraseña del usuario
+        role: #No se si va
+          type: string
+          description: Rol del usuario
+      example:
+        _id: ObjectId("60f3b3b3e4b0b3f7b4f3b3b3")
+        first_name: "Juan"
+        last_name: "Perez"
+        email: "Juan@Perez.com"
+        password: "123456"
+        role: "admin"

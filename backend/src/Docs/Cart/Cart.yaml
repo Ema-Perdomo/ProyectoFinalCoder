@@ -1,0 +1,99 @@
+paths:
+  /api/cart/:
+    post:
+      summary: Crear un carrito
+      tags:
+        - Cart
+      responses:
+        "201":
+          description: Carrito creado correctamente
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "500":
+          description: Error interno del servidor al crear carrito.
+
+  /api/cart/{id}:
+    get:
+      summary: Obtener un carrito dado su Id.
+      tags:
+        - Cart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id del carrito a buscar
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Carrito obtenido correctamente
+          content:
+            application/json:
+              schema:
+                type: array #Array de objetos
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "500":
+          description: Error interno del servidor al obtener carrito
+
+
+  /api/cart/{cid}/{pid}:
+    post:
+      summary: Agregar un producto a un carrito, dada la Id del producto y del carrito.
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito
+          schema:
+            type: integer
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto a agregar
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Producto agregado correctamente
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Cart"
+        "403":
+          description: Usuario no autorizado
+        "500":
+          description: Error interno del servidor al agregar producto al carrito
+
+  /api/cart/purchase/{cid}:
+    get:
+      summary: Realizar la compra de un carrito, dada la Id del carrito, generando un ticket.
+      tags:
+        - Cart
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito a comprar
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Compra realizada correctamente
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Ticket"
+        "400":
+          description: Error al realizar la compra. Stock insuficiente.
+        "404":
+          description: Carrito no encontrado
+        "500":
+          description: Error interno del servidor al crear ticket de compra.
