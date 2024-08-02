@@ -1,21 +1,23 @@
-import {useState,useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import ItemDetail from '../ItemDetail/ItemDetail';
-import {getFirestore, doc, getDoc} from 'firebase/firestore';
 
 const ItemDetailContainer = () => {
 
     const [item, setItem] = useState([])
-    //Usa id para enrutamiento y filtrado
-    const { id } = useParams();
+    //Usa pid (product id dentro de mongo y backend) para enrutamiento y filtrado
+    const { pid } = useParams();
 
     useEffect(() => {
-        const queryDb = getFirestore();
-        const queryDoc = doc(queryDb, 'item', id);
-        getDoc(queryDoc).then((response)=>
-        setItem({id: response.id, ...response.data() })
-        )
-      }, [id]) //id indica cuantas veces se ejecutas la logica dentro del componente
+        fetch(`http://localhost:8080/api/products/${pid}`)
+            .then(response => response.json())
+            .then(data => setItem(data))
+        // useEffect(() => { TODO: Aca hago un fetch al current para saber el rol del user
+        //  fetch() 
+
+        // })
+
+    }, [pid]) //id indica cuantas veces se ejecutas la logica dentro del componente
 
     return (
         <div>

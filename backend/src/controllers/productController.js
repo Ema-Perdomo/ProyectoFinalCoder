@@ -40,9 +40,13 @@ export const createProduct = async (req, res) => {
 
     try {
         const product = req.body
+        console.log(product)
         const mensaje = await productModel.create(product)
-        res.status(201).send('Producto creado correctamente')
-        return mensaje //WARNING: No se si va aca o con el .send
+        if (mensaje)
+            res.status(201).send('Producto creado correctamente')
+        else
+            res.status(400).send('Error al crear producto')
+        //return mensaje //WARNING: No se si va aca o con el .send
     } catch (error) {
         res.status(500).send(`Error interno del servidor al crear producto: ${error}`)
     }
@@ -50,15 +54,15 @@ export const createProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
     try {
-        if (req.user.role == 'Admin') {
-            const idProducto = req.params.idProd
-            const upProduct = req.body                                  //Consulto body
-            const mensaje = await productModel.findByIdAndUpdate(idProducto, upProduct)
-            res.status(200).send(mensaje)
-            //return mensaje
-        } else {
-            res.status(403).send('Usuario no autorizado')
-        }
+        // if (req.user.role == 'Admin') {
+        // } else {+
+        //     res.status(403).send('Usuario no autorizado')
+        // }
+        const idProducto = req.params.idProd
+        const upProduct = req.body                                  //Consulto body
+        const mensaje = await productModel.findByIdAndUpdate(idProducto, upProduct)
+        res.status(200).send(mensaje)
+        //return mensaje
     } catch (error) {
         res.status(500).send(`Error interno del servidor al actualizar producto: ${error}`)
     }
@@ -66,14 +70,14 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
     try {
-        if (req.user.role == 'Admin') {
+       // if (req.user.role == 'Admin') {
             const idProducto = req.params.idProd
             const mensaje = await productModel.findByIdAndDelete(idProducto)
             res.status(200).send(mensaje)
             //return mensaje 
-        } else {
-            res.status(403).send('Usuario no autorizado')
-        }
+        // } else {
+        //     res.status(403).send('Usuario no autorizado')
+        // }
     } catch (error) {
         res.status(500).send(`Error interno del servidor al eliminar el producto: ${error}`)
     }

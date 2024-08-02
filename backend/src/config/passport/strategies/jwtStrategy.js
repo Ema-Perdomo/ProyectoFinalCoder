@@ -12,7 +12,7 @@ const cookieExtractor = req => {
 
 const jwtOptions = {
     //Cambio de ExtractJwt.fromExtractors([cookieExtractor])  a ExtractJwt.fromAuthHeaderAsBearerToken()
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Para cuando tengamos Frontend
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Para cuando tengamos Frontend   TODO: Cambiar a ExtractJwt.fromExtractors([cookieExtractor]) (???
     secretOrKey: "coderhouse"
 }
 

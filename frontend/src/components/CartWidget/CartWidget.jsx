@@ -5,8 +5,8 @@ const CartWidget = () => {
   const {totalProducts} = useCartContext();
   return (
     <div>
-      <i><TbGardenCart /></i>
-      <span className="qty-display">{totalProducts()}</span>
+      <i ><TbGardenCart  size={30} /></i>
+      <span className="qty-display fw-bolder h5 text-danger">{totalProducts()}</span>
     </div>
   )
 }

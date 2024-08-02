@@ -30,3 +30,7 @@ export const sendDocuments = async (req, res) => {
         res.status(500).send("Error al enviar documento:", error)
     }
 }
+
+
+//TODO: Crear controlador DELETE USER que no tenga conexion por mas de 2 dias
+//Tiene que enviAR UN CORREO AVISANDO QUE SE ELIMINO POR inactividad

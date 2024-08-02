@@ -6,25 +6,35 @@ import logo from '../../assets/Logo_Barbell.svg';
 import { Link } from 'react-router-dom';
 
 
-function NavBar() {
+function NavBar({ role }) {
+
+
   return (
     <>
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand to="/" className='navbar-brand' >
-            <img className='navBarLogo img-responsive' src={logo} alt="Logo" />
-          </Navbar.Brand>
+          <Link to="/" >
+            <Navbar.Brand >
+              <img className='w-25' src={logo} alt="Logo" />
+            </Navbar.Brand>
+          </Link>
+
           <Nav className="me-auto">
 
-            <Link to="/" className='Pestaña'>Home</Link>
-            <Link to="/categoria/Gym" className='Pestaña'>Gym</Link>
-            <Link to="/categoria/Deportes" className='Pestaña'>Deportes</Link>
-            <Link to="/categoria/Indumentaria" className='Pestaña'>Indumentaria</Link>
-            <Link to="/categoria/Suplementos" className='Pestaña'>Suplementos</Link>
-            
+            <Link to="/" className='text-decoration-none m-3 text-light '>Home</Link>
+            <Link to="/categoria/Gimnasio" className='text-decoration-none m-3 text-light '>Gimnasio</Link>
+            <Link to="/categoria/Deportes" className='text-decoration-none m-3 text-light '>Deportes</Link>
+            <Link to="/categoria/Indumentaria" className='text-decoration-none m-3 text-light '>Indumentaria</Link>
+            <Link to="/categoria/Suplementos" className='text-decoration-none m-3 text-light '>Suplementos</Link>
+            {/* <Link to="/categoria/Outdoor" className='text-decoration-none m-3 text-light '>Outdoor</Link> */}
+            {role === 'Admin' ?
+              <Link to="/CrearProducto" className='text-decoration-none m-3 text-light '>Añadir producto</Link>
+              : null}
+            {/* Añadir producto es solo para el admin */}
+
           </Nav>
-          <Link to="/cart" className="NavBarItems" > <CartWidget /> </Link>
-          
+          <Link to="/cart" className='text-decoration-none m-3 text-light' > <CartWidget /> </Link>
+
         </Container>
       </Navbar>
     </>
