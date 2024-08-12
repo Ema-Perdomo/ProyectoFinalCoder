@@ -87,7 +87,7 @@ const initializePassport = () => {
     ))
 
     passport.use('jwt', strategyJWT) //La definicion esta en jwtStrategy.js
-
+    // o? passport.use(strategyJWT) //La definicion esta en jwtStrategy.js
 
     //Auth con Google
     // var GoogleStrategy = require('passport-google-oauth20').Strategy;

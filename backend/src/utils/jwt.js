@@ -11,13 +11,32 @@ export const generateToken = (user) => {
     const token = jwt.sign({ user }, "coderhouse", { expiresIn: '12h' }) //token firmado por mi backend, solo mi backend puede leerlo
     return token
 }
-console.log(generateToken({
-    "_id": "66022a9a3e8fc698fbd3ae65",
-    "first_name": "Jhon",
-    "last_name": "Doe",
-    "password": "$2b$15$qpMV.Cim6P8FajbHEORWu.5cvj5blvEv31rKS.4SPg1nEdpfqYfFe",
-    "age": 35,
-    "email": "JhonD.coder.com",
-    "role": "Admin",
-    "__v": 0
-}))
+
+// const authToken = (req, res, next) => {
+//     const authHeader = req.headers.authorization;
+//     if (!authHeader) {
+//         return res.status(401).send({
+//             error: "Not authenticated"
+//         })
+//         const token = authHeader.split(' ')[1]; //Para quitar la palabra Bearer
+//         jwt.verify(token, "coderhouse", (err, user) => {
+//             if (err) {
+//                 return res.status(403).send({
+//                     error: "Not authorized"
+//                 })
+//             }
+//             req.user = user;
+//             next();
+//         })
+//     }
+// }
+
+
+//Para el dotenv
+// export const verifyToken = (token) => {
+//     return jwt.verify(token, varenv.jwtSecret);
+// }
+
+export const verifyToken = (token) => {
+    return jwt.verify(token, "coderhouse");
+}

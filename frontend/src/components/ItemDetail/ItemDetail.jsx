@@ -3,6 +3,7 @@ import ItemCount from '../ItemCount/ItemCount';
 import { Link } from 'react-router-dom';
 import { useCartContext } from '../context/CartContext';
 import { Route } from 'react-router-dom';
+import { userModel } from '../../../../backend/src/models/user';
 // import DeleteProduct from '../DeleteProduct/DeleteProduct'; 
 
 //Descripcion clickeable del producto
@@ -18,11 +19,12 @@ const ItemDetail = ({ item }) => {
   }
 
   const deleteProduct = async () => {
-
+      {userModel.role === "admin" ? console.log("es admin") : console.log("no es admin")} //TODO: Hacer que habilite o no la edicion de productos segun rol
       fetch(`http://localhost:8080/api/products/${item._id}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${localStorage.getItem('authToken')}`
       }
     })
     .then(res => res.json())
@@ -38,6 +40,7 @@ const ItemDetail = ({ item }) => {
         <p>{item.description}</p>
         <p> U$D {item.price}</p>
         <p> Cantidad: {item.stock}</p>
+        {/* <p> eSTOY ACA</p> */}
       </div>
       <div>
         {goToCart ? <Link to='/cart'>Terminar compra</Link> : <ItemCount stock={item.stock} initial={1} onAdd={onAdd} />}
@@ -55,13 +58,6 @@ const ItemDetail = ({ item }) => {
       {/* <div>
         {role === 'Admin' ?
               <Route path={'/updateProducto'} element={<CrearProduct greeting='Actualizar producto' />} />
-              : null
-            }
-      </div> */}
-      {/* <div>
-        
-        {role === 'Admin' ?
-              <Route path={'/crearProducto'} element={<DeleteProduct greeting='Eliminar producto' />} />
               : null
             }
       </div> */}

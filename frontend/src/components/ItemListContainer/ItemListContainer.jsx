@@ -36,13 +36,21 @@ const ItemListContainer = ({ greeting }) => {
 
 
   return (
+  <div>
+
+     {/* Añadir producto es solo para el admin */}
+            {/* {user.role === 'Admin' ?
+              <Link to="/CrearProducto" className='text-decoration-none m-3 text-light '>Añadir producto</Link>
+              : null} */}
+  {/* <Button type="button" onClick={"/CrearProducto"} >Añadir producto</Button> */}
+              
+
+    <h3 className='d-flex justify-content-center mt-2'>{greeting}</h3>
     <div>
-      <h3 className='d-flex justify-content-center mt-2'>{greeting}</h3>
-      <div>
-        <ItemList item={item} />
-      </div>
-      <hr />
+      <ItemList item={item} />
     </div>
+    <hr />
+  </div>
   )
 }
 

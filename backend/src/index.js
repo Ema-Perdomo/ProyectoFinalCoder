@@ -20,9 +20,10 @@ import cors from 'cors';
 const app = express()
 const PORT = 8080
 const corsOptions = {
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }
 app.use(cors(corsOptions))
 //Server
@@ -72,7 +73,8 @@ app.use(session({                       //Permite trabajar con sessiones
 app.engine('handlebars', engine())          //Implemento handlebars para utilizarlo en mi app
 app.set('view engine', 'handlebars')        //Voy a utilizar handlebars para las vistas(views) de mi app 
 app.set('views', __dirname + '/views')      //Las views van a estar en dirname + /views
-app.use(cookieParser())                     //Permite trabajar con cookies
+app.use(cookieParser("coderSecret"))                     //Permite trabajar con cookies
+// app.use(cookieParser())
 
 //Passport
 initializePassport()
@@ -85,7 +87,7 @@ app.use('/', indexRouter)
 
 //Routes Cookies
 app.get('/setCookies', (req, res) => {
-    res.cookie('CookieCookie', 'Esto es una cookie :D', { maxAge: 30000000, signed: true }).send('Cookie seteada')
+    res.cookie('coderCookie', generateToken(req.session.user), { maxAge: 30000000, signed: true }).send('Cookie seteada') //signed true: firmada para que no sea modificada por el cliente
     //Signed: firmada para que no sea modificada por el cliente  
 })
 app.get('/getCookies', (req, res) => {
@@ -94,7 +96,7 @@ app.get('/getCookies', (req, res) => {
 })
 //Elimino cookies
 app.get('/deleteCookies', (req, res) => {
-    res.clearCookie('CookieCookie').send('Cookie eliminada')
+    res.clearCookie('coderCookie').send('Cookie eliminada')
     //res.Cookie('CookieCookie', '', {expires: new Date(0)})
 })
 //Session Routes 
@@ -108,20 +110,20 @@ app.get('/session', (req, res) => {
     }
 })
 
-app.post('/login', (req, res) => {
-    const { email, password } = req.body
+// app.post('/login', (req, res) => {
+//     const { email, password } = req.body
 
-    if (email === "admin@admin.com" && password === "admin") {
-        //Guardo en session el email y password
-        req.session.email = email
-        req.session.password = password
+//     if (email === "admin@admin.com" && password === "admin") {
+//         //Guardo en session el email y password
+//         req.session.email = email
+//         req.session.password = password
 
-        res.send('Login exitoso')
-    } else {
-        res.send('Login incorrecto')
-    }
+//         res.send('Login exitoso')
+//     } else {
+//         res.send('Login incorrecto')
+//     }
 
-})
+// })
 
 
 //socket es un cliente escuchando

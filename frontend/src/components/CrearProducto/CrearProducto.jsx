@@ -146,10 +146,7 @@ const CrearProducto = () => {
                         URL de la imagen:
                         <input id="thumbnail" type="text" name="thumbnail" value={item.thumbnail} onChange={typing} />
                     </label>
-                    {/* TODO: VA ESTE CUANDO HAGA EL UPDATEPRODUCT */}
                     <input type="button" value="Submit" onClick={pid ? updateProduct : submit} />
-                    {/* <input type="button" value="Submit" onClick={submit} />*/}
-
                 </form>
             </div>
         </div>
