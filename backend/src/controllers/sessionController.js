@@ -47,7 +47,7 @@ export const login = async (req, res) => {
 
     const accessToken = generateToken(req.session.user)
     console.log("###### Login success #######")
-    console.log(accessToken,': accessToken desde el sessionController')
+    console.log(accessToken, ': accessToken desde el sessionController')
     res.cookie('coderCookie', accessToken, { maxAge: 3600000 }).send({ status: "success", message: "Logged inAAAAA", user: user })
 }
 
@@ -162,14 +162,14 @@ export const sendEmailPassword = async (req, res) => {
 
 
 export const current = async (req, res) => {
-    const cookie = req.cookies['coderCookie']
-    const verify = verifyToken(cookie)
-    if (verify) {
-        const user = await userModel.findOne({ email: verify.user.email })
-        return res.send({ status: "success", payload: user })
+    try {
+        const cookie = req.cookies['coderCookie']
+        const verify = verifyToken(cookie)
+        if (verify) {
+            const user = await userModel.findOne({ email: verify.user.email })
+            return res.send({ status: "success", payload: user })
+        }
+    } catch (error) {
+        res.send({ status: "error", error: 'No hay usuario logeado' })
     }
-
-
-
-    // TODO: No se cual va
 }

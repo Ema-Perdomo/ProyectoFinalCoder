@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useCartContext } from '../context/CartContext';
 import { Route } from 'react-router-dom';
 import { userModel } from '../../../../backend/src/models/user';
+import { useUserContext } from '../UserContext/UserContext';
 // import DeleteProduct from '../DeleteProduct/DeleteProduct'; 
 
 //Descripcion clickeable del producto
@@ -11,6 +12,7 @@ const ItemDetail = ({ item }) => {
 
   //TODO: <Lo sig no se si iria
   const [goToCart, setGoToCart] = useState(false);
+  const { user } = useUserContext();
   const { addProduct } = useCartContext()
   const onAdd = (cantidad) => {
     setGoToCart(true);
@@ -24,7 +26,7 @@ const ItemDetail = ({ item }) => {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": `Bearer ${localStorage.getItem('authToken')}`
+        "Authorization": `Bearer ${localStorage.getItem('authToken')}` //TODO: Verificar si esto es correcto, creo que no va con bearer 
       }
     })
     .then(res => res.json())
