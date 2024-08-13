@@ -87,13 +87,16 @@ export const githubSession = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-    const user = await userModel.findOne({ email: req.session.user.email })
+    const cookie = req.cookies['coderCookie']
+    const verify = verifyToken(cookie)
+
+    const user = await userModel.findOne({ email: verify.user.email })
     user.lastConnection = new Date() //TODO: ajustar date para que muestre el correcto segun nuestra zona horaria o segun la zona del user
     await user.save()
 
     req.session.destroy((e =>
         //Si hay error al cerrar sesion devuelvo el error sino redirijo a la pagina principal
-        e ? res.status(500).send('Error al cerrar sesion') : res.status(200).redirect(/*"api/session/login" o: */ "/")
+        e ? res.status(500).send('Error al cerrar sesion') : res.send({ status: "success", message: "Logged out" })
     ))
 };
 

@@ -10,6 +10,7 @@ import CrearProducto from './components/CrearProducto/CrearProducto.jsx';
 import Login from './components/Login/Login.jsx';
 import UserProvider, { useUserContext } from './components/UserContext/UserContext.jsx';
 import { useEffect } from 'react';
+import LogOut from './components/LogOut/LogOut.jsx';
 
 function App() {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ function App() {
         <Route path={"/item/:pid"} element={<ItemDetailContainer />} />
         <Route path={'/cart'} element={<Cart />} />
         <Route path={'/checkout'} element={<CheckOut />} />
+        <Route path={'/logout'} element={<LogOut />} />
         {
           user && user.role === 'Admin' ?
             <Route path={'/CrearProducto'} element={<CrearProducto greeting='Crear producto' />} />

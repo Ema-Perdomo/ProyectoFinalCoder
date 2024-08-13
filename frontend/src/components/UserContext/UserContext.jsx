@@ -53,8 +53,28 @@ const UserProvider = ({ children }) => {
             });
     };
 
+    const logOut = () => {
+        fetch('http://localhost:8080/api/session/logout', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.status === 'success') {
+                    setUser(null);
+                    console.log('Usuario deslogueado');
+                    navigate('/');
+                } else {
+                    console.log('Usuario no deslogueado');
+                }
+            });
+    };
+
     return (
-        <UserContext.Provider value={{ user, logIn }}>
+        <UserContext.Provider value={{ user, logIn, logOut }}>
             {children}
         </UserContext.Provider>
     );

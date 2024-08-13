@@ -10,7 +10,7 @@ import { useUserContext } from '../UserContext/UserContext';
 
 function NavBar() {
 
-  //const { user } = useUserContext();
+  const { user } = useUserContext();
   //console.log(user);
 
   return (
@@ -38,6 +38,11 @@ function NavBar() {
               : null} */}
           </Nav>
           <Link to="/cart" className='text-decoration-none m-3 text-light' > <CartWidget /> </Link>
+          {
+            user ? 
+            <Link to="/logout" className='text-decoration-none m-3 text-light' >Cerrar Seshon</Link>
+            : null
+          }
 
           <Link to="*" className='text-decoration-none m-3 text-light ' ><BsFillPersonFill size={35} /> </Link>
 

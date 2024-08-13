@@ -86,15 +86,16 @@ const Login = () => {
             //             console.log(data)
             //         )
         })
-        //Creo su carrito
+
+        //Luego de registrar al user, creo su carrito
         fetch('http://localhost:8080/api/cart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            // body: JSON.stringify({
-            //     products: []
-            // })
+             body: JSON.stringify({
+                 products: []
+             })
         }
         )
     }
